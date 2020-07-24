@@ -1,0 +1,11 @@
+name: OP
+api:
+  - 3.0.0
+  - 4.0.0
+version: 1.0.0
+main: op\Main
+author: Aleondev
+commands:
+  opset:
+    description: §7[§6OP§7]
+    permission: op.command

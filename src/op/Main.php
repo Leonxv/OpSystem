@@ -14,11 +14,15 @@ class Main extends PluginBase implements Listener
 {
 
     public $prefix = "§7[§6OP§7]";
+    public $config;
+    public $cfg;
 
     public function onEnable()
     {
         if(!file_exists($this->getDataFolder(). "player/")){
             @mkdir($this->getDataFolder(). "player/");
+             $this->saveResource("config.yml");
+             $this->config = new Config($this->getDataFolder() . "config.yml", Config::YAML);
         }
         $this->getLogger()->info($this->prefix . "§aOn");
     }
@@ -29,23 +33,22 @@ class Main extends PluginBase implements Listener
         if ($cmd->getName() === "opset") {
             if ($sender->hasPermission("op.command")) {
             } else {
-                $sender->sendMessage($this->prefix . "Du hast keine rechte");
+                $sender->sendMessage($this->prefix . $this->getConfig()->get("perms"));
                 return false;
             }
             if(empty($args[0])){
-                $sender->sendMessage($this->prefix . " §7Usage /op {player}");
+                $sender->sendMessage($this->prefix . $this->getConfig()->get("usage"));
                 return false;
             }
             if($this->getServer()->getPlayer($args[0])) {
                 $test = $this->getServer()->getPlayer($args[0]);
-                $cfg = new Config($this->getDataFolder(). "player/" . $test . ".yml", Config::YAML);
+                $cfg = new Config($this->getDataFolder(). "player/" . $args[0] . ".yml", Config::YAML);
                 $cfg->set("OP", $args[0]);
                 $cfg->save();
                 $test->setOp(true);
-                $test->sendMessage($this->prefix . "§7You a now OP");
-                $sender->sendMessage($this->prefix . "du hast erfolgreich dem " . $test . "op geben");
+                $test->sendMessage($this->prefix . $this->getConfig()->get("op"));
             }else{
-                $sender->sendMessage($this->prefix . "§cPlayer not found");
+                $sender->sendMessage($this->prefix . $this->getConfig()->get("player"));
                 return false;
             }
         }

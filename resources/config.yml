@@ -1,1 +1,24 @@
 
+#Config by Aleondev
+
+# Version 1
+
+# "§"
+
+# "\n"
+
+#Perms
+
+perms: "You have not permission"
+
+#Usage
+
+usage: "§7Uasge /opset {player}"
+
+#Op
+
+op: "§aYou a Now OP"
+
+#player not found
+
+player: "§cPlayer Not Found"
